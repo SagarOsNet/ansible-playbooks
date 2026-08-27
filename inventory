@@ -1,0 +1,5 @@
+[srv1]
+srv1 ansible_host=192.168.43.93
+
+[srv2]
+srv2 ansible_host=192.168.43.94

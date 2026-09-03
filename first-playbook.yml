@@ -1,0 +1,19 @@
+---
+- name: Linux automation
+  hosts: srv1
+  tasks:
+    - name: Show Linux hostname
+      ansible.builtin.command: hostname
+
+- name: Windows automation
+  hosts: srv2
+  gather_facts: false
+  connection: winrm
+  vars:
+    ansible_port: 5985
+    ansible_user: ansibleadmin
+    ansible_winrm_transport: ntlm
+
+  tasks:
+    - name: Show Windows hostname
+      ansible.windows.win_command: hostname

@@ -1,0 +1,24 @@
+---
+- name: Install Apache on Ubuntu
+  hosts: srv1
+  become: true
+
+  tasks:
+    - name: Install Apache
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+
+- name: Install Apache on Windows
+  hosts: srv2
+  become: true
+  become_method: runas
+  become_user: SYSTEM
+  gather_facts: false
+
+  tasks:
+    - name: Extract Apache
+      community.windows.win_unzip:
+        src: "C:\\Users\\Administrator\\Downloads\\httpd-2.4.68-260827-Win64-VS18 (1).zip"
+        dest: C:\
+        remote_src: true

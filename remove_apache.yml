@@ -1,0 +1,36 @@
+---
+- name: Remove Apache on Ubuntu
+  hosts: srv1
+  become: true
+
+  tasks:
+    - name: Stop Apache
+      ansible.builtin.service:
+        name: apache2
+        state: stopped
+
+    - name: Remove Apache
+      ansible.builtin.apt:
+        name: apache2
+        state: absent
+
+- name: Remove Apache on Windows
+  hosts: srv2
+  become: true
+  become_method: runas
+  become_user: SYSTEM
+  gather_facts: false
+
+  tasks:
+    - name: Stop Apache service
+      ansible.windows.win_service:
+        name: Apache2.4
+        state: stopped
+
+    - name: Uninstall Apache service
+      ansible.windows.win_shell: C:\Apache24\bin\httpd.exe -k uninstall
+
+    - name: Remove Apache files
+      ansible.windows.win_file:
+        path: C:\Apache24
+        state: absent
